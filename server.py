@@ -24,8 +24,8 @@ ROOT = Path(__file__).parent
 
 sample_rate = 16000
 
-interface = os.environ.get('panda.info', '0.0.0.0')
-server_port = int(os.environ.get('SERVER_PORT', 8887))
+interface = os.environ.get('SERVER_INTERFACE', '0.0.0.0')
+server_port = int(os.environ.get('SERVER_PORT', 8888))
 server_cert_file = os.environ.get('CERT_FILE', None)
 
 pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 1))
