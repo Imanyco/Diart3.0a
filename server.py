@@ -24,7 +24,7 @@ ROOT = Path(__file__).parent
 
 sample_rate = 16000
 
-interface = os.environ.get('SERVER_INTERFACE', '0.0.0.0')
+interface = os.environ.get('SERVER_INTERFACE', 'panda.info:8888')
 server_port = int(os.environ.get('SERVER_PORT', 8888))
 server_cert_file = os.environ.get('CERT_FILE', None)
 
