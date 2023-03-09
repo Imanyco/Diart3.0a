@@ -28,7 +28,7 @@ interface = os.environ.get('SERVER_INTERFACE', '0.0.0.0')
 server_port = int(os.environ.get('SERVER_PORT', 8888))
 server_cert_file = os.environ.get('CERT_FILE', None)
 
-pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 1))
+pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 2))
 loop = asyncio.get_event_loop()
 
 #sio = socketio.AsyncServer(cors_allowed_origins='*')
