@@ -183,7 +183,7 @@ if __name__ == '__main__':
 
     if server_cert_file:
         ssl_context = ssl.SSLContext()
-        ssl_context.load_cert_chain(server_cert_file, server_key_file)
+        ssl_context.load_cert_chain(server_cert_file)
     else:
         ssl_context = None
 
