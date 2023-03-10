@@ -151,7 +151,10 @@ class StreamAudioSource(AudioSource):
         self.frame_queue = queue.Queue(maxsize=100)
 
     def _get_floatdata(self, frame):
-        short_array = array.array('h', frame)
+        try:
+            short_array = array.array('h', frame)
+        except TypeError:
+            short_array = []
         float_array = []
 
         for sample in short_array:
@@ -180,10 +183,14 @@ class StreamAudioSource(AudioSource):
             # check frame queue
             if self.frame_queue.empty():
                 time.sleep(0.01)
+                continue
 
             # get frame data
             frame = self.frame_queue.get()
             float_data = self._get_floatdata(frame)
+            if not float_data:
+                time.sleep(0.01)
+                continue
 
             # update duration
             self._duration += len(float_data) / self.sample_rate

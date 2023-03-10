@@ -31,8 +31,9 @@ server_cert_file = os.environ.get('CERT_FILE', None)
 pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 1))
 loop = asyncio.get_event_loop()
 
-#sio = socketio.AsyncServer(cors_allowed_origins='*')
-sio = socketio.AsyncServer(cors_allowed_origins=[])
+sio = socketio.AsyncServer(cors_allowed_origins='*')
+#sio = socketio.AsyncServer(cors_allowed_origins=[])
+
 clients = {}
 record_idx = 0
 wav_data = []
