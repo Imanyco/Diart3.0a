@@ -24,9 +24,13 @@ class RealTimeDiart:
 
     def stream_annote(self, final_annote):
         for seg_st, seg_end, spk_name, text in final_annote:
+            for ch_idx, ch in enumerate(spk_name):
+                if ch.isdigit():
+                    break
+            new_spk_name = "{}{}".format(spk_name[:ch_idx], str(int(spk_name[ch_idx:]) + 1))
             res_dict = {
                 text : "diarization result",
-                "spk" : [spk_name, seg_st, seg_end]
+                "spk" : [new_spk_name, seg_st, seg_end]
             }
             self.result_queue.put(json.dumps(res_dict))
         #print(final_annote)
