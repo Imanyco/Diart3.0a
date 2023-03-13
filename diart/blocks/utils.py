@@ -55,7 +55,7 @@ class Binarize:
             offsets = np.logical_and(is_active[t], np.logical_not(is_active[t + 1]))
             for spk in np.where(offsets)[0]:
                 region = Segment(start_times[spk], timestamps[t + 1].middle)
-                annotation[region, spk] = f"speaker{spk}"
+                annotation[region, spk] = f"speaker {spk + 1}"
         return annotation
 
 
