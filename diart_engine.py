@@ -30,11 +30,13 @@ class RealTimeDiart:
             seg_st = float(seg_st)
             seg_end = float(seg_end)
             duration = seg_end - seg_st
+            start_time = datetime.datetime.fromtimestamp(current_time)
+            end_time = datetime.datetime.fromtimestamp(current_time + duration)
             res_dict = {
                 text : "diarization result",
                 "spk" : [spk_name, seg_st, seg_end],
-                "start time": datetime.datetime.fromtimestamp(current_time),
-                "end time": datetime.datetime.fromtimestamp(current_time + duration),
+                "start time": start_time,
+                "end time": end_time,
                 "duration": duration
             }
             self.result_queue.put(json.dumps(res_dict))
