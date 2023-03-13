@@ -9,7 +9,6 @@ from diart.inference import RealTimeInference
 from diart.models import SegmentationModel, EmbeddingModel
 import json
 import time
-from datetime import datetime, timedelta
 
 # from diart.sinks import RTTMWriter
 
@@ -25,16 +24,15 @@ class RealTimeDiart:
         self.result_queue = queue.Queue(maxsize=100)
 
     def stream_annote(self, final_annote):
+        current_time = time.time()
         for seg_st, seg_end, spk_name, text in final_annote:
             duration = seg_end - seg_st
-            current_time = datetime.now()
-            end_time = current_time + timedelta(seconds=duration)
             res_dict = {
                 text : "diarization result",
                 "spk" : [spk_name, seg_st, seg_end],
-                "duration": duration,
-                "start_time": current_time.strftime("%Y-%m-%d %H:%M:%S"),
-                "end_time": end_time.strftime("%Y-%m-%d %H:%M:%S")
+                "start time": current_time,
+                "end time": current_time + duration,
+                "duration": duration
             }
             self.result_queue.put(json.dumps(res_dict))
         #print(final_annote)
