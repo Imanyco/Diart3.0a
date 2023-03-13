@@ -26,6 +26,8 @@ class RealTimeDiart:
     def stream_annote(self, final_annote):
         current_time = time.time()
         for seg_st, seg_end, spk_name, text in final_annote:
+            seg_st = float(seg_st)
+            seg_end = float(seg_end)
             duration = seg_end - seg_st
             res_dict = {
                 text : "diarization result",
