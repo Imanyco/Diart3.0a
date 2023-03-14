@@ -8,7 +8,6 @@ from diart.blocks import OnlineSpeakerDiarization, PipelineConfig
 from diart.inference import RealTimeInference
 from diart.models import SegmentationModel, EmbeddingModel
 import json
-import time
 
 # from diart.sinks import RTTMWriter
 
@@ -24,17 +23,14 @@ class RealTimeDiart:
         self.result_queue = queue.Queue(maxsize=100)
 
     def stream_annote(self, final_annote):
-        current_time = time.time()
         for seg_st, seg_end, spk_name, text in final_annote:
-            seg_st = float(seg_st)
-            seg_end = float(seg_end)
-            duration = seg_end - seg_st
+            for ch_idx, ch in enumerate(spk_name):
+                if ch.isdigit():
+                    break
+            new_spk_name = "{}{}".format(spk_name[:ch_idx], str(int(spk_name[ch_idx:]) + 1))
             res_dict = {
                 text : "diarization result",
-                "spk" : [spk_name, seg_st, seg_end],
-                "start time": current_time,
-                "end time": current_time + duration,
-                "duration": duration
+                "spk" : [new_spk_name, seg_st, seg_end]
             }
             self.result_queue.put(json.dumps(res_dict))
         #print(final_annote)
