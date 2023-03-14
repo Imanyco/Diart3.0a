@@ -131,9 +131,12 @@ tensorboard==2.10.1
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 threadpoolctl==3.1.0
+torch==1.13.0
 torch-audiomentations==0.11.0
 torch-pitch-shift==1.2.2
+torchaudio==0.13.0
 torchmetrics==0.10.2
+torchvision==0.14.0
 tqdm==4.64.0
 typer==0.6.1
 typing_extensions==4.4.0
@@ -151,4 +154,5 @@ aiohttp==3.6.3
 aiohttp-basicauth==1.0.0
 aiohttp-cors==0.6.0
 python-socketio==5.4.0
-python-engineio==3.13.2
+# python-engineio==3.13.2
+python-engineio==4.1.0
