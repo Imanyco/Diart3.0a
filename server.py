@@ -110,8 +110,10 @@ def process_chunk(rec, message):
         return rec.PartialResult()
 
 
-def diarization_audio(diaz):
+def diarization_audio(diaz, loop):
+    asyncio.set_event_loop(loop)
     diaz.run_audio_xfer()
+    loop.run_forever()
 
 
 class DiazTask:
@@ -136,7 +138,7 @@ class DiazTask:
 
     def start(self):
         self.__audio_task = threading.Thread(name="diarization thread"+str(self.__sid), target=diarization_audio,
-                                             args=(clients[self.__sid],))
+                                             args=(clients[self.__sid], loop,))
         self.__audio_task.start()
 
     def stop(self):
