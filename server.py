@@ -200,5 +200,4 @@ if __name__ == '__main__':
     sio.attach(app)
     #CORS(app)
     #@cross_origin(app)
-    #@authorized()
     web.run_app(app, port=server_port, ssl_context=ssl_context)
