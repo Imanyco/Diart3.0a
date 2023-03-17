@@ -8,3 +8,5 @@ pip install -r requirements.txt
 pip install python-socketio==5.4.0
 
 print('All dependencies installed successfully')
+
+python server.py
