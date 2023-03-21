@@ -12,7 +12,6 @@ class Binarize:
     """
     Transform a speaker segmentation from the discrete-time domain
     into a continuous-time speaker segmentation.
-
     Parameters
     ----------
     threshold: float
@@ -29,12 +28,10 @@ class Binarize:
         """
         Return the continuous-time segmentation
         corresponding to the discrete-time input segmentation.
-
         Parameters
         ----------
         segmentation: SlidingWindowFeature
             Discrete-time speaker segmentation.
-
         Returns
         -------
         annotation: Annotation
@@ -55,13 +52,12 @@ class Binarize:
             offsets = np.logical_and(is_active[t], np.logical_not(is_active[t + 1]))
             for spk in np.where(offsets)[0]:
                 region = Segment(start_times[spk], timestamps[t + 1].middle)
-                annotation[region, spk] = f"speaker{spk}"
+                annotation[region, spk] = f"speaker{spk + 1}"
         return annotation
 
 
 class Resample:
     """Dynamically resample audio chunks.
-
     Parameters
     ----------
     sample_rate: int
@@ -82,9 +78,7 @@ class Resample:
 
 class AdjustVolume:
     """Change the volume of an audio chunk.
-
     Notice that the output volume might be different to avoid saturation.
-
     Parameters
     ----------
     volume_in_db: float
@@ -97,12 +91,10 @@ class AdjustVolume:
     @staticmethod
     def get_volumes(waveforms: torch.Tensor) -> torch.Tensor:
         """Compute the volumes of a set of audio chunks.
-
         Parameters
         ----------
         waveforms: torch.Tensor
             Audio chunks. Shape (batch, samples, channels).
-
         Returns
         -------
         volumes: torch.Tensor
