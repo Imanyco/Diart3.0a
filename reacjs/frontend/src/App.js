@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 
-const kaldiServerUrl = 'https://pandaa2.info:8888';
+const kaldiServerUrl = 'pandaa2.info:8888';
 const bufferSize = 2048;
 
 function App() {
