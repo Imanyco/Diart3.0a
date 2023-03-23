@@ -9,6 +9,7 @@ import numpy
 import wave
 import struct
 import socketio
+import socket
 import queue
 from pathlib import Path
 from aiohttp import web, WSMsgType
@@ -31,7 +32,10 @@ server_cert_file = os.environ.get('CERT_FILE', None)
 pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 1))
 loop = asyncio.get_event_loop()
 
-sio = socketio.AsyncServer(cors_allowed_origins='*')
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+sio = socketio.AsyncServer(cors_allowed_origins='*', async_mode='asgi', sockets=sock)
 #sio = socketio.AsyncServer(cors_allowed_origins=[])
 
 clients = {}
