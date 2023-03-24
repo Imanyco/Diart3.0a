@@ -26,8 +26,14 @@ sample_rate = 16000
 
 interface = os.environ.get('SERVER_INTERFACE', '0.0.0.0')
 server_port = int(os.environ.get('SERVER_PORT', 8888))
-server_cert_file = os.environ.get('CERT_FILE', '/etc/letsencrypt/live/pandaa2.info/cert.pem')
-server_key_file = os.environ.get('KEY_FILE', '/etc/letsencrypt/live/pandaa2.info/privkey.pem')
+
+# For running app on the cloud
+# server_cert_file = os.environ.get('CERT_FILE', '/etc/letsencrypt/live/pandaa2.info/cert.pem')
+# server_key_file = os.environ.get('KEY_FILE', '/etc/letsencrypt/live/pandaa2.info/privkey.pem')
+
+# For running app locally
+server_cert_file = None
+server_key_file = None
 
 pool = concurrent.futures.ThreadPoolExecutor((os.cpu_count() or 1))
 loop = asyncio.get_event_loop()
@@ -180,13 +186,16 @@ async def get_wav_path(request):
     return web.Response(content_type='text/html', text=wav_path)
 
 if __name__ == '__main__':
+    # For running app in the cloud
+    # if server_cert_file:
+    #     ssl_context = ssl.SSLContext()
+    #     ssl_context.load_cert_chain(server_cert_file, server_key_file)
+    # else:
+    #     ssl_context = None
 
-    if server_cert_file:
-        ssl_context = ssl.SSLContext()
-        ssl_context.load_cert_chain(server_cert_file, server_key_file)
-    else:
-        ssl_context = None
-
+    # For running the app locally
+    ssl_context = None
+    
     app = web.Application()
     cors = aiohttp_cors.setup(app, defaults={
          "*": aiohttp_cors.ResourceOptions(allow_credentials=True, expose_headers="*", allow_headers="*", )})
